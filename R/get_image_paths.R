@@ -3,6 +3,12 @@
 # 2022-05-23) then create bash code to copy them to a new directory for 
 # uploading.
 
+library(tidyverse)
+library(googlesheets4)
+
+# Adding my Google service account credentials
+gs4_auth(path = "~/.credentials/google_sheets_api/service_account.json")
+
 # Here's how I did it for Xander, base it off this:
 
 # # Getting the image names -------------------------------------------------
