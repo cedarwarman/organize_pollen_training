@@ -21,8 +21,16 @@ mkdir /xdisk/rpalaniv/cedar/image_processing/stabilized_jpgs/${1}_stab
 
 for well in well_*; do
     printf "\nProcessing ${well}\n"
-    mkdir ${output_dir}/${1}_stab/${well}
+	output_well_dir=${output_dir}/${1}_stab/${well}
+    mkdir ${output_well_dir}
     cd ${well}
-	# IMAGEMAGICK COMMAND (with path of new location)
+
+	# Converting the images
+	for image in *.tif; do
+		# IMAGEMAGICK COMMAND (with path of new location)
+		# echo ${image}
+		convert ${image} -sampling-factor 4:2:0 -strip -quality 85 -interlace JPEG -colorspace Gray ${output_well_dir}/${image%.*}.jpg
+	done
+
     cd ..
 done

@@ -3,11 +3,11 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
-#SBATCH --mem=1gb
-#SBATCH --time=1:00:00
+#SBATCH --mem=500mb
+#SBATCH --time=0:20:00
 #SBATCH --account=rpalaniv
 #SBATCH --partition=standard
-#SBATCH --array=1-2
+#SBATCH --array=1-2%200
 #SBATCH --output=%x_%A_%a.out
 #SBATCH --error=%x_%A_%a.err
 
