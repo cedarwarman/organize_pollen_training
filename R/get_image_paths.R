@@ -30,6 +30,10 @@ file_names <- left_join(wells_to_accessions, wells_with_good_density, by = c("da
 # Only keeping the good ones
 file_names <- file_names[complete.cases(file_names), ]
 file_names <- file_names[file_names$count == "g", ]
+
+# Only keeping ones older that 2022-05-23 to match the first set
+file_names <- file_names[file_names$date < "2022-05-23", ]
+
 file_names <- file_names[ , 1:5]
 
 # Now I need to make rows for each image sequence frame. The vast majority 
@@ -90,3 +94,30 @@ write.table(upload_2[ , c("string")],
 
 # The bash command to copy them is:
 # cat ~/scratch/upload_1.txt | xargs -I % cp % ~/scratch/upload_1
+
+
+# Data leakage ------------------------------------------------------------
+# Oops, I forgot about data leakage. If the training images are very similar 
+# to the validation images (e.g. they come from the same time-series) then 
+# they're not a very good control. I will look here to see if there are any
+# time-series that I didn't use yet for training. If there are any, I will 
+# set them aside for validation. Or also I could split the existing ones to 
+# make sure the validation ones are used in the training. Or if I already 
+# used them all I can rank them and set aside the ones with the fewest 
+# annotated.
+
+# First, checking to see which time-series were not part of the first training 
+# set (upload_1). OK I think this is working properly, this says that there are 
+# still 2965 wells that have no time points in the training set.
+not_part_of_upload_1 <- anti_join(distinct(file_names[ , 1:5]), distinct(upload_1[ , 1:5]))
+
+# Next, in the current training set (upload_1), which wells have multiple time 
+# points and could theoretically end up in both the training and validation 
+# splits.
+400 - nrow(distinct(upload_1[ , 1:5])) 
+
+# Looks like 27 of the images are not from a well with only 1 time point in the 
+# set. I could write the Python program to ignore these images. Also, if there's
+# 3338 wells total, I could in the future just only use unique wells and still 
+# label thousands and have thousands for testing and not have leakage from images
+# in the same sequence. Are there any other sources of leakage?
