@@ -152,9 +152,11 @@ all(duplicated(sampled_file_names[ , 1:5])) # FALSE
 # Checking to see if there's any overlap with upload_1
 all(duplicated(rbind(sampled_file_names[ , 1:5], upload_1[ , 1:5]))) # FALSE
 
-# Removing one that doesn't exist
+# Removing a couple that doesn't exist. This comes from the fact that there aren't 
+# actually 83 images for a couple of the first runs.
 sampled_file_names <- sampled_file_names %>%
-  filter(string != "/xdisk/rpalaniv/cedar/image_processing/stabilized_jpgs/2021-11-19_run1_34C_stab/well_B1/2021-11-19_run1_34C_B1_t081_stab.jpg")
+  filter(string != "/xdisk/rpalaniv/cedar/image_processing/stabilized_jpgs/2021-11-19_run1_34C_stab/well_B1/2021-11-19_run1_34C_B1_t081_stab.jpg") %>%
+  filter(string != "/xdisk/rpalaniv/cedar/image_processing/stabilized_jpgs/2021-11-19_run1_34C_stab/well_B2/2021-11-19_run1_34C_B2_t082_stab.jpg")
 
 # Randomizing
 random_vec_2 <- sample(nrow(sampled_file_names))
@@ -173,8 +175,6 @@ write.table(upload_2[ , c("string")],
             row.names = F,
             col.names = F,
             quote = F)
-
-# I manually removed one that didn't exist above and did it over # checking seed
 
 # Reminder: the bash command to copy them is:
 # cat ~/scratch/upload_2.txt | xargs -I % cp % ~/scratch/upload_2
