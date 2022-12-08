@@ -84,13 +84,14 @@ write.table(upload_1[ , c("string")],
             col.names = F,
             quote = F)
 
-upload_2 <- file_names[random_vec[401:800], ]
-
-write.table(upload_2[ , c("string")],
-            file = file.path(getwd(), "data", "upload_2.txt"),
-            row.names = F,
-            col.names = F,
-            quote = F)
+# See below for upload 2, had to fix duplicated wells.
+# upload_2 <- file_names[random_vec[401:800], ]
+# 
+# write.table(upload_2[ , c("string")],
+#             file = file.path(getwd(), "data", "upload_2.txt"),
+#             row.names = F,
+#             col.names = F,
+#             quote = F)
 
 # The bash command to copy them is:
 # cat ~/scratch/upload_1.txt | xargs -I % cp % ~/scratch/upload_1
@@ -114,10 +115,67 @@ not_part_of_upload_1 <- anti_join(distinct(file_names[ , 1:5]), distinct(upload_
 # Next, in the current training set (upload_1), which wells have multiple time 
 # points and could theoretically end up in both the training and validation 
 # splits.
-400 - nrow(distinct(upload_1[ , 1:5])) 
+400 - nrow(distinct(upload_1[ , 1:5])) # This isn't removing all the dups, just 
+# the ones that are duplicated after the first one, so it's actually 53 dups below.
 
 # Looks like 27 of the images are not from a well with only 1 time point in the 
 # set. I could write the Python program to ignore these images. Also, if there's
-# 3338 wells total, I could in the future just only use unique wells and still 
-# label thousands and have thousands for testing and not have leakage from images
-# in the same sequence. Are there any other sources of leakage?
+# 3338 wells total (from the first camera), I could in the future just only use 
+# unique wells and still label thousands and have thousands for testing and not 
+# have leakage from images in the same sequence. Are there any other sources 
+# of leakage?
+
+# Going to go with the unique wells method. First, I'll make a list of the 
+# ones from the first training set that are not unique so I can make sure they're 
+# all part of the training set and not part of the validation set. I'll do this 
+# in the script that makes the tfrecords, located here:
+# https://github.com/cedarwarman/pollen_cv/blob/main/python/make_tfrecord_from_labelbox.py
+
+dups_from_upload_1 <- upload_1[duplicated(upload_1[ , 1:5]) | duplicated(upload_1[ , 1:5], fromLast = TRUE), ]
+
+
+# Making new upload list(s) with no duplicated wells ----------------------
+# Time for the next 400, but with no duplicated wells from the first 400. I'll 
+# start by randomly selecting unique rows from the full list of file_names, 
+# after removing the wells that I already did in upload_1.
+file_names_no_upload_1 <- anti_join(file_names, upload_1, # Not just the dups, but everything
+                                    by = c("date", "run", "well"))
+
+# Sampling 1 row from each group
+sampled_file_names <- file_names_no_upload_1 %>%
+  group_by(date, run, well) %>%
+  slice_sample(n = 1)
+
+# Checking to see if there are any well duplicates 
+all(duplicated(sampled_file_names[ , 1:5])) # FALSE
+
+# Checking to see if there's any overlap with upload_1
+all(duplicated(rbind(sampled_file_names[ , 1:5], upload_1[ , 1:5]))) # FALSE
+
+# Randomizing
+random_vec_2 <- sample(nrow(sampled_file_names))
+
+# Pulling the first 400 to make up upload_2
+upload_2 <- sampled_file_names[random_vec_2[1:400], ]
+
+# Triple checking that there are no well duplicates and no overlap with upload 1
+upload_2[duplicated(upload_2[ , 1:5]) | duplicated(upload_2[ , 1:5], fromLast = TRUE), ] # No dupe wells
+
+intersect(upload_2[ , 1:5], upload_1[ , 1:5]) # No intersect
+
+# Looks good, writing out the second list
+write.table(upload_2[ , c("string")],
+            file = file.path(getwd(), "data", "upload_2.txt"),
+            row.names = F,
+            col.names = F,
+            quote = F)
+
+# Reminder: the bash command to copy them is:
+# cat ~/scratch/upload_1.txt | xargs -I % cp % ~/scratch/upload_1
+
+
+
+
+
+
+
