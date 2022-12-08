@@ -152,6 +152,10 @@ all(duplicated(sampled_file_names[ , 1:5])) # FALSE
 # Checking to see if there's any overlap with upload_1
 all(duplicated(rbind(sampled_file_names[ , 1:5], upload_1[ , 1:5]))) # FALSE
 
+# Removing a couple that didn't exist
+sampled_file_names <- sampled_file_names %>%
+  filter(string != "/xdisk/rpalaniv/cedar/image_processing/stabilized_jpgs/2021-11-18_run1_26C_stab/well_C5/2021-11-18_run1_26C_C5_t079_stab.jpg")
+
 # Randomizing
 random_vec_2 <- sample(nrow(sampled_file_names))
 
@@ -170,8 +174,14 @@ write.table(upload_2[ , c("string")],
             col.names = F,
             quote = F)
 
+# Two small problems, series that didn't go all the way to 83 and failed to copy:
+# 2021-11-18_run1_26C_C5_t079_stab.jpg
+# 2021-11-18_run2_26C_C1_t081_stab.jpg
+
+# I manually removed them above and did it over # checking seed
+
 # Reminder: the bash command to copy them is:
-# cat ~/scratch/upload_1.txt | xargs -I % cp % ~/scratch/upload_1
+# cat ~/scratch/upload_2.txt | xargs -I % cp % ~/scratch/upload_2
 
 
 
