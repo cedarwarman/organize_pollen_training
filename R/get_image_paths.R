@@ -180,8 +180,30 @@ write.table(upload_2[ , c("string")],
 # cat ~/scratch/upload_2.txt | xargs -I % cp % ~/scratch/upload_2
 
 
+# Making file with names of dupes for tfrecord script ----------------------
+# The script that makes the tfrecords needs a list of the time-series dupes 
+# so that it can put them all in the training dataset and fix the data leakage 
+# problem. I'll make the list here in a nice format that I can copy and paste 
+# into the tfrecord script.
+dupe_name_export <- dups_from_upload_1
+dupe_name_export$export_string <- paste0(
+  "\"",
+  dupe_name_export$date,
+  "_run",
+  dupe_name_export$run,
+  "_",
+  dupe_name_export$temp_target,
+  "C_",
+  dupe_name_export$well,
+  "_t",
+  dupe_name_export$frame_num,
+  "_stab.jpg\",")
 
-
+write.table(dupe_name_export[ , c("export_string")],
+            file = file.path(getwd(), "data", "time-series_dupes.txt"),
+            row.names = F,
+            col.names = F,
+            quote = F)
 
 
 
