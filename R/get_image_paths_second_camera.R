@@ -44,7 +44,7 @@ file_names$frame_num <- rep(seq(0, 65), times = nrow(file_names) / 66)
 file_names$frame_num <- sprintf("%03d", file_names$frame_num) 
 
 # This is the path of the base directory that the jpgs are in
-base_dir_path <- "/xdisk/rpalaniv/cedar/image_processing/stabilized_jpgs/"
+base_dir_path <- "/xdisk/rpalaniv/cedar/image_processing/normalized_stabilized_jpgs/"
 
 file_names$string <- paste0(base_dir_path,
                             file_names$date,
@@ -52,7 +52,7 @@ file_names$string <- paste0(base_dir_path,
                             file_names$run,
                             "_",
                             file_names$temp_target,
-                            "C_stab/well_",
+                            "C_normalized_stabilized/well_",
                             file_names$well,
                             "/",
                             file_names$date,
@@ -78,7 +78,7 @@ all(duplicated(sampled_file_names[ , 1:5])) # FALSE
 
 # Removing one it chose that didn't exist for whatever reason
 sampled_file_names <- sampled_file_names %>%
-  filter(string != "/xdisk/rpalaniv/cedar/image_processing/stabilized_jpgs/2022-06-06_run1_26C_stab/well_A1/2022-06-06_run1_26C_A1_t000_stab.jpg")
+  filter(string != "/xdisk/rpalaniv/cedar/image_processing/normalized_stabilized_jpgs/2022-06-06_run1_26C_normalized_stabilized/well_A1/2022-06-06_run1_26C_A1_t000_stab.jpg")
 
 
 # Randomizing
