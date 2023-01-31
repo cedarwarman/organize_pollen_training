@@ -15,7 +15,7 @@
 shopt -s nullglob
 
 # Moving to the processed images directory
-cd /xdisk/rpalaniv/cedar/image_processing/processed_tifs/
+cd /xdisk/rpalaniv/cedar/image_processing/normalized_stabilized/
 
 # Setting up the array
 image_sequence=$(find . -maxdepth 1 -name '*run*' | sed -n ${SLURM_ARRAY_TASK_ID}p)
@@ -27,11 +27,12 @@ then
 	exit 1
 fi
 
+# Deletes "./"
 image_sequence=${image_sequence:2}
 
 # Looping through the image sequence folder
 printf "Image sequence variable is: ${image_sequence}\n"
-cd ./${image_sequence}/${image_sequence}_stabilized_images
+cd ./${image_sequence}
 printf "Present working directory is: ${PWD}\n"
 # Getting the image sequence basename
 sequence_name=${PWD##%*/}
@@ -40,11 +41,7 @@ printf "\nProcessing ${sequence_name}\n"
 # Converts tif to jpg
 printf "Converting\n"
 MAGICK_THREAD_LIMIT=1
-bash /home/u16/cedar/git/organize_pollen_training/bash/convert_tif_to_jpg.sh ${image_sequence}
-
-
-#mv ${sequence_name}_montage /xdisk/rpalaniv/cedar/image_processing/montages
-
+bash /home/u16/cedar/git/organize_pollen_training/bash/convert_tif_to_jpg_camera_2.sh ${image_sequence}
 
 # Cleaning up
 shopt -u nullglob
