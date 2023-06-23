@@ -7,7 +7,7 @@
 #SBATCH --time=0:20:00
 #SBATCH --account=rpalaniv
 #SBATCH --partition=standard
-#SBATCH --array=1-249%200
+#SBATCH --array=1-199%199
 #SBATCH --output=%x_%A_%a.out
 #SBATCH --error=%x_%A_%a.err
 
@@ -15,7 +15,7 @@
 shopt -s nullglob
 
 # Moving to the processed images directory
-cd /xdisk/rpalaniv/cedar/image_processing/processed_tifs/
+cd /xdisk/rpalaniv/cedar/cv/images/processed_tifs_camera_one
 
 # Setting up the array
 image_sequence=$(find . -maxdepth 1 -name '*run*' | sed -n ${SLURM_ARRAY_TASK_ID}p)

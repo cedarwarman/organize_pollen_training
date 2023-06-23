@@ -6,7 +6,7 @@
 # directory and runs the script inside. It then saves the processed images to
 # the following hard-coded location:
 
-output_dir='/xdisk/rpalaniv/cedar/image_processing/stabilized_jpgs'
+output_dir='/xdisk/rpalaniv/cedar/cv/images/stabilized_jpgs_camera_one'
 
 # Getting the image sequence basename
 
@@ -17,7 +17,7 @@ sequence_name=${PWD##%/*/*}
 echo "THIS IS THE BASH SCRIPT"
 echo $1
 
-mkdir /xdisk/rpalaniv/cedar/image_processing/stabilized_jpgs/${1}_stab
+mkdir /xdisk/rpalaniv/cedar/cv/images/stabilized_jpgs_camera_one/${1}_stab
 
 for well in well_*; do
     printf "\nProcessing ${well}\n"
