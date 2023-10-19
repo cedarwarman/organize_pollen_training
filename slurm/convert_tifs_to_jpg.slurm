@@ -7,7 +7,7 @@
 #SBATCH --time=0:20:00
 #SBATCH --account=rpalaniv
 #SBATCH --partition=standard
-#SBATCH --array=1-199%199
+#SBATCH --array=1-24%24
 #SBATCH --output=%x_%A_%a.out
 #SBATCH --error=%x_%A_%a.err
 

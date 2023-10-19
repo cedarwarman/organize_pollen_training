@@ -1,0 +1,46 @@
+Image sequence variable is: 2021-12-15_run1_34C
+Present working directory is: /xdisk/rpalaniv/cedar/cv/images/processed_tifs_camera_one_missing/2021-12-15_run1_34C/2021-12-15_run1_34C_stabilized_images
+
+Processing /xdisk/rpalaniv/cedar/cv/images/processed_tifs_camera_one_missing/2021-12-15_run1_34C/2021-12-15_run1_34C_stabilized_images
+Converting
+THIS IS THE BASH SCRIPT
+2021-12-15_run1_34C
+
+Processing well_A4
+
+Processing well_A5
+
+Processing well_A6
+
+Processing well_B2
+
+Processing well_B3
+
+Processing well_B4
+
+Processing well_B5
+
+Processing well_B6
+
+Processing well_C2
+
+Processing well_C3
+
+Processing well_C4
+
+Processing well_C5
+
+Processing well_C6
+
+Processing well_D1
+
+Processing well_D2
+
+Processing well_D3
+
+Processing well_D4
+
+Processing well_D5
+
+Processing well_D6
+Detailed performance metrics for this job will be available at https://metrics.hpc.arizona.edu/#job_viewer?action=show&realm=SUPREMM&resource_id=73&local_job_id=8436686 by 8am on 2023/10/20.
