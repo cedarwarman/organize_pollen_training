@@ -15,7 +15,8 @@
 shopt -s nullglob
 
 # Moving to the processed images directory
-cd /xdisk/rpalaniv/cedar/cv/images/processed_tifs_camera_one
+# cd /xdisk/rpalaniv/cedar/cv/images/processed_tifs_camera_one
+cd /xdisk/rpalaniv/cedar/cv/images/processed_tifs_camera_one_missing
 
 # Setting up the array
 image_sequence=$(find . -maxdepth 1 -name '*run*' | sed -n ${SLURM_ARRAY_TASK_ID}p)
