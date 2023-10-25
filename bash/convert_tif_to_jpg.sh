@@ -7,7 +7,7 @@
 # the following hard-coded location:
 
 # output_dir='/xdisk/rpalaniv/cedar/cv/images/stabilized_jpgs_camera_one'
-output_dir='/xdisk/rpalaniv/cedar/cv/images/stabilized_jpgs_camera_one_missing'
+output_dir='/xdisk/rpalaniv/cedar/cv/images/stabilized_jpgs_camera_one_incomplete'
 
 # Getting the image sequence basename
 
@@ -19,7 +19,7 @@ echo "THIS IS THE BASH SCRIPT"
 echo $1
 
 # mkdir /xdisk/rpalaniv/cedar/cv/images/stabilized_jpgs_camera_one/${1}_stab
-mkdir /xdisk/rpalaniv/cedar/cv/images/stabilized_jpgs_camera_one_missing/${1}_stab
+mkdir /xdisk/rpalaniv/cedar/cv/images/stabilized_jpgs_camera_one_incomplete/${1}_stab
 
 for well in well_*; do
     printf "\nProcessing ${well}\n"
